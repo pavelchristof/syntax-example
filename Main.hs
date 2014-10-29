@@ -63,4 +63,5 @@ main = do
         case S.runPrinter expr ast of
           Left err -> putStrLn err
           Right doc -> putStrLn (P.render doc)
+
     return ()
