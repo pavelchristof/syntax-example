@@ -1,6 +1,6 @@
 name:                syntax-example
 version:             0.1.0.0
-synopsis:            Example application using syntax.
+synopsis:            Example application using syntax, a library for abstract syntax descriptions.
 license:             MIT
 license-file:        LICENSE
 author:              Paweł Nowak
