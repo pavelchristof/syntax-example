@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import           Control.Applicative
+import           Control.Lens.SemiIso
 import           Control.Lens.TH
 import qualified Data.Attoparsec.Text as AP
 import           Data.Char
@@ -11,6 +12,7 @@ import           Data.Syntax (Syntax)
 import qualified Data.Syntax as S
 import qualified Data.Syntax.Attoparsec.Text as S
 import qualified Data.Syntax.Char as S
+import qualified Data.Syntax.Combinator as S
 import qualified Data.Syntax.Pretty as S
 import           Data.Text (Text)
 import qualified Data.Text.IO as T
@@ -37,14 +39,17 @@ atom :: Syntax syn Text => syn AST
 atom =  _Var /$/ name
     /|/ parens expr
 
+-- | Parsers a list of applications.
+apps :: Syntax syn Text => syn AST
+apps = bifoldl1 (attemptAp_ _App) /$/ S.sepBy1 atom S.spaces1
+
 -- | An expression of our lambda calculus.
 expr :: Syntax syn Text => syn AST
-expr =  _App /$/ atom /* S.spaces1 /*/ atom
-    /|/ _Abs /$/ S.char '\\'   /* S.spaces_
+expr =  _Abs /$/ S.char '\\'   /* S.spaces_
               */ name          /* S.spaces
              /*  S.string "->" /* S.spaces
-             /*/ expr 
-    /|/ atom
+             /*/ expr
+    /|/ apps
 
 main :: IO ()
 main = do
