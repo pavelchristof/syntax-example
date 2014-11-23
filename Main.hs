@@ -21,7 +21,7 @@ import           Data.Text (Text)
 import qualified Data.Text.IO as T
 import qualified Text.PrettyPrint as P
 
--- A simple untyped lambda calculus.
+-- A simple lambda calculus.
 
 data Literal = LitStr Text
              | LitNum Scientific
