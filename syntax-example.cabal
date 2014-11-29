@@ -51,7 +51,7 @@ description:
   > quoted = S.char '"' */ S.takeTill (=='"') /* S.char '"'
   > 
   > -- | Encloses a symbol in parentheses.
-  > parens :: SyntaxChar syn seq => syn a -  > syn a
+  > parens :: SyntaxChar syn seq => syn a -> syn a
   > parens m = S.char '(' */ S.spaces_ */ m /* S.spaces_ /* S.char ')'
   > 
   > -- | A literal.

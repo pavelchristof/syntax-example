@@ -73,7 +73,7 @@ apps = bifoldl1 _App /$/ S.sepBy1 atom S.spaces1
 expr :: SyntaxChar syn Text => syn AST
 expr =  _Abs /$~ S.char '\\'    /*/ S.spaces_
              /*/ name           /*/ S.spaces
-             /*/  S.string "->" /*/ S.spaces
+             /*/ S.string "->"  /*/ S.spaces
              /*/ expr
 
     /|/ _Let /$~ S.string "let" /*/ S.spaces1
