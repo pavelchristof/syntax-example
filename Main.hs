@@ -6,20 +6,20 @@ import           Control.Applicative
 import           Control.Lens.Cons
 import           Control.Lens.SemiIso
 import           Control.Lens.TH
-import qualified Data.Attoparsec.Text as AP
+import qualified Data.Attoparsec.Text.Lazy as AP
 import           Data.Char
 import           Data.Scientific (Scientific)
 import           Data.SemiIsoFunctor
 import           Data.Syntax (Syntax)
 import qualified Data.Syntax as S
-import qualified Data.Syntax.Attoparsec.Text as S
+import qualified Data.Syntax.Attoparsec.Text.Lazy as S
 import           Data.Syntax.Char (SyntaxChar)
 import qualified Data.Syntax.Char as S
 import qualified Data.Syntax.Combinator as S
-import qualified Data.Syntax.Pretty as S
+import qualified Data.Syntax.Printer.Text as S
 import           Data.Text (Text)
-import qualified Data.Text.IO as T
-import qualified Text.PrettyPrint as P
+import qualified Data.Text.Lazy.Builder as T
+import qualified Data.Text.Lazy.IO as T
 
 -- A simple lambda calculus.
 
@@ -91,16 +91,16 @@ main = do
     t <- T.getContents
 
     -- Try to parse it.
-    case AP.parseOnly (S.getParser expr <* AP.skipSpace <* AP.endOfInput) t of
-      Left err  -> putStrLn err
-      Right ast -> do
-        -- If parsing succeeded print the AST.
-        print ast
-        
-        -- Try to pretty print it.
-        -- (Printing cannot really fail in this example)
-        case S.runPrinter expr ast of
-          Left err  -> putStrLn err
-          Right doc -> putStrLn (P.render doc)
+    case AP.parse (S.getParser expr <* AP.skipSpace <* AP.endOfInput) t of
+      AP.Fail _ _ err  -> putStrLn err
+      AP.Done _ ast -> do
+          -- If parsing succeeded print the AST.
+          print ast
+
+          -- Try to pretty print it.
+          -- (Printing cannot really fail in this example)
+          case S.runPrinter expr ast of
+            Left err  -> putStrLn err
+            Right bld -> T.putStrLn (T.toLazyText bld)
 
     return ()
