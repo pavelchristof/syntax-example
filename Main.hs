@@ -5,6 +5,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import           Control.Applicative
+import           Control.Category.Structures
 import           Control.Lens.Cons
 import           Control.Lens.SemiIso
 import           Control.Lens.TH
@@ -12,7 +13,7 @@ import           Control.SIArrow
 import qualified Data.Attoparsec.Text.Lazy as AP
 import           Data.Char
 import           Data.Scientific (Scientific)
-import           Data.Syntax (Syntax, Seq)
+import           Data.Syntax (Seq)
 import qualified Data.Syntax as S
 import qualified Data.Syntax.Attoparsec.Text.Lazy as S
 import           Data.Syntax.Char (SyntaxChar, SyntaxText)
