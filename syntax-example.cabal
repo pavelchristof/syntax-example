@@ -6,13 +6,13 @@ description:
   .
   The code:
   .
-  * <https://github.com/Pawel834/syntax-example/blob/master/Main.hs Main.hs>
+  * <https://github.com/Pawel834/syntax-example/blob/83c283823749038db3d21aaf99105f456e25bac7/Main.hs Main.hs>
   .
   Example input:
   .
   > (\f->
   > (\x
-  >      -> f     ((x) x)) (\x 
+  >      -> f     ((x) x)) (\x
   > -> f  (x x)
   > )
   > (\x -> "test")
